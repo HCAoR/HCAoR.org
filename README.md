@@ -1,3 +1,3 @@
-Welcome to the official site of the HCAoR. 
-<br/>
-We record, we preserve, we inherit. 
+#### Welcome to the official site of the HCAoR 
+
+We record, we preserve, we research, we inherit. 

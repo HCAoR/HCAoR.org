@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>罗德岛历史与文化办公室</title>
+    <style>
+        /* --- 基础与全局样式 --- */
+        :root {
+            --primary-color: #3a7ca5; /* 主题蓝，用于链接和高亮 */
+            --dark-bg: #1a1a1a;       /* 深色背景 */
+            --secondary-bg: #2a2a2a;   /* 次级背景/卡片背景 */
+            --text-color: #e0e0e0;     /* 主要文字颜色 */
+            --text-secondary: #a0a0a0; /* 次要文字颜色 */
+            --border-color: #444;      /* 边框颜色 */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #fff;
+            font-weight: 300;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #fff;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* --- 头部与导航 --- */
+        header {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-area .logo {
+            height: 50px; /* 控制Logo高度 */
+        }
+
+        .logo-area .wordmark {
+            height: 35px; /* 控制字标高度 */
+            filter: invert(1); /* SVG反色，以在深色背景上显示 */
+        }
+
+        header nav ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            display: flex;
+        }
+
+        header nav li {
+            padding: 0 15px;
+        }
+
+        header nav a {
+            color: var(--text-color);
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* --- 英雄/展示区 --- */
+        .hero {
+            text-align: center;
+            padding: 80px 0;
+            background: var(--secondary-bg);
+        }
+        
+        .hero .org-name-zh {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .hero .org-name-en {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+        
+        .hero .slogan {
+            font-family: 'Times New Roman', Times, serif;
+            font-style: italic;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        /* --- 内容网格布局 --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--secondary-bg);
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            font-size: 1.8rem;
+            color: #fff;
+        }
+        
+        .card p {
+            color: var(--text-secondary);
+        }
+
+        /* --- 按钮样式 --- */
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #4a90c2;
+            color: #fff;
+        }
+
+        /* --- 联系与赞助 --- */
+        #contact .contact-info, #sponsor .sponsor-info {
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        /* --- 页脚 --- */
+        footer {
+            padding: 30px 0;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-container">
+            <div class="logo-area">
+                <img src="./icon.svg" alt="组织Logo" class="logo">
+                <img src="./wordmark.svg" alt="组织字标" class="wordmark">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#mission">目标</a></li>
+                    <li><a href="#projects">核心项目</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                    <li><a href="#sponsor">赞助方式</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1 class="org-name-zh">罗德岛历史与文化办公室</h1>
+            <p class="org-name-en">History and Culture Administration of Rhodes Island</p>
+            <p class="slogan">"We record, we preserve, we research, we inherit."</p>
+        </div>
+    </section>
+
+    <section id="mission" class="container">
+        <h2 class="section-title">目标</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>我们的使命 (Mission)</h3>
+                <p>将 HCAoR DB 建设成完整高效内容高质的</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" style="background:var(--secondary-bg);">
+        <div class="container">
+            <h2 class="section-title">核心项目</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>罗德岛历史与文化办公室综合数据库</h3>
+                    <p>即 History and Culture Administration of Rhodes Island General Database, HCAoR DB</p>
+                    <p>一个专注于明日方舟及其衍生作品的剧情与考据的Wiki</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="blog" class="container">
+        <h2 class="section-title">Blog</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>【文章标题一】</h3>
+                <p>【文章摘要...】<br><small>发布日期：2025-08-28</small></p>
+                <a href="#" class="btn">阅读更多</a>
+            </div>
+            <div class="card">
+                <h3>【文章标题二】</h3>
+                <p>【文章摘要...】<br><small>发布日期：2025-08-15</small></p>
+                <a href="#" class="btn">阅读更多</a>
+            </div>
+            <div class="card">
+                <h3>【文章标题三】</h3>
+                <p>【文章摘要...】<br><small>发布日期：2025-08-01</small></p>
+                <a href="#" class="btn">阅读更多</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="background:var(--secondary-bg);">
+        <div class="container">
+            <h2 class="section-title">联系我们</h2>
+            <div class="contact-info">
+                <p>我们欢迎您参与综合数据库的建设</p>
+                <p>您若有疑问，我们也欢迎您通过以下方式随时向我们提出</p>
+                <p>QQ群：1111111111</p>
+                <p><strong>电子邮件:</strong> <a href="mailto:example@example.org">example@example.org</a></p>
+                </div>
+        </div>
+    </section>
+
+    <section id="sponsor" class="container">
+        <h2 class="section-title">赞助我们</h2>
+        <div class="sponsor-info">
+            <p>您的每一份支持，都是我们继续下去的动力</p>
+            <a href="https://www.patreon.com/U_0000" class="btn">通过 Patreon 赞助</a>
+            <a href="https://www.ko-fi.com/u_0000" class="btn">通过 Ko-fi 赞助</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>Unless otherwise stated, articles on this website are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">Attribution-NonCommercial-ShareAlike 4.0</a>.</p>
+            <p>&copy; 2025 History and Culture Administration of Rhodes Island. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

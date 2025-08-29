@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test - 罗德岛历史与文化办公室</title>
+    <style>
+        /* --- 基础与全局样式 (与主页相同) --- */
+        :root {
+            --primary-color: #3a7ca5;
+            --dark-bg: #1a1a1a;
+            --secondary-bg: #2a2a2a;
+            --text-color: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --border-color: #444;
+            --header-height: 81px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover { color: #fff; }
+
+        a:focus-visible, .btn:focus-visible {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 3px;
+            border-radius: 3px;
+        }
+
+        img { max-width: 100%; height: auto; display: block; }
+        
+        /* --- 头部与页脚样式 (与主页相同) --- */
+        header {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        .logo-area .logo { height: 50px; }
+        .logo-area .wordmark { height: 35px; filter: invert(1); }
+        header nav ul { padding: 0; margin: 0; list-style: none; display: flex; }
+        header nav li { padding: 0 15px; }
+        header nav a { color: var(--text-color); text-transform: uppercase; font-weight: bold; font-size: 14px; }
+        
+        footer {
+            padding: 30px 0;
+            margin-top: 60px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* --- 按钮样式 --- */
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #4a90c2;
+            color: #fff;
+        }
+
+        /* --- 博客文章正文页专属样式 --- */
+        .post-container {
+            max-width: 80ch; /* 限制内容宽度以提高可读性 */
+            margin: 40px auto;
+        }
+
+        .post-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .post-header .post-title {
+            font-size: 3rem;
+            color: #fff;
+            margin: 0 0 15px 0;
+        }
+
+        .post-header .post-meta {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .post-content {
+            font-size: 1.1rem;
+        }
+
+        .post-content h2 {
+            font-size: 2rem;
+            color: #fff;
+            margin-top: 60px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .post-content p {
+            margin-bottom: 1.5em;
+        }
+
+        .post-content blockquote {
+            margin: 30px 0;
+            padding: 20px;
+            background: var(--secondary-bg);
+            border-left: 4px solid var(--primary-color);
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .post-content ul {
+            padding-left: 20px;
+        }
+        
+        .post-content li {
+            margin-bottom: 0.8em;
+        }
+        
+        .back-link-container {
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        /* 移动端样式调整 */
+        @media (max-width: 768px) {
+            header nav { display: none; } /* 在文章页，移动端通常不显示导航 */
+            .post-header .post-title { font-size: 2.2rem; }
+            .post-content { font-size: 1rem; }
+            .post-content h2 { font-size: 1.8rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-container">
+            <a href="https://hcaor.github.io/" aria-label="返回主页" class="logo-area">
+                <img src="https://raw.githubusercontent.com/HCAoR/HCAoR.github.io/73f1178343636784b52d6fb59cb0ac07f7c2c026/assets/icon.svg" alt="罗德岛历史与文化办公室 Logo" class="logo">
+                <img src="https://raw.githubusercontent.com/HCAoR/HCAoR.github.io/73f1178343636784b52d6fb59cb0ac07f7c2c026/assets/wordmark.svg" alt="罗德岛历史与文化办公室 字标" class="wordmark">
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="https://hcaor.github.io/#projects">旗下企划</a></li>
+                    <li><a href="https://hcaor.github.io/#blog">博客</a></li>
+                    <li><a href="https://hcaor.github.io/#contact">联系方式</a></li>
+                    <li><a href="https://hcaor.github.io/#sponsor">赞助</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container post-container">
+            <article>
+                <header class="post-header">
+                    <h1 class="post-title">test</h1>
+                    <div class="post-meta">
+                        <span>发布于：2025年8月29日</span> | <span>u202f</span>
+                    </div>
+                </header>
+
+                <div class="post-content">
+                    <p>test</p>
+                    
+                    <p>这是一段用于展示常规段落样式的占位文字。它遵循了页面的整体设计语言，确保在深色背景下依然拥有良好的可读性。行高和字体大小都经过调整，以适应长时间的屏幕阅读。</p>
+
+                    <h2>二级标题测试</h2>
+                    <p>这是二级标题下的段落内容。二级标题可用于组织文章结构，使其层次分明。每个标题下方都有一条细线作为视觉分隔，引导读者的目光。</p>
+                    
+                    <blockquote>这是一段引用的测试文字。它通过独特的背景色和左侧边框来突出显示，适合引用资料、名言或者需要特别强调的内容。</blockquote>
+
+                    <p>以下是一个无序列表的示例：</p>
+                    <ul>
+                        <li>列表项目一：用于分条列举信息。</li>
+                        <li>列表项目二：每个项目都有合适的间距。</li>
+                        <li>列表项目三：继承了全局的链接 <a href="#">样式测试</a>。</li>
+                    </ul>
+
+                    <p>文章正文的测试内容到此结束。通过这些预设的样式，您可以轻松地撰写格式丰富的博客文章，而无需担心排版问题。</p>
+                </div>
+            </article>
+
+            <div class="back-link-container">
+                <a href="https://hcaor.github.io/#blog" class="btn">← 返回博客列表</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Unless otherwise stated, articles on this website are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0">Attribution-NonCommercial-ShareAlike 4.0</a>.</p>
+            <p>&copy; 2025 History and Culture Administration of Rhodes Island. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

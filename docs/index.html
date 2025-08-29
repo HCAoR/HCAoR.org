@@ -7,13 +7,19 @@
     <style>
         /* --- 基础与全局样式 --- */
         :root {
-            --primary-color: #3a7ca5; /* 主题蓝，用于链接和高亮 */
-            --dark-bg: #1a1a1a;       /* 深色背景 */
-            --secondary-bg: #2a2a2a;   /* 次级背景/卡片背景 */
-            --text-color: #e0e0e0;     /* 主要文字颜色 */
-            --text-secondary: #a0a0a0; /* 次要文字颜色 */
-            --border-color: #444;      /* 边框颜色 */
+            --primary-color: #3a7ca5;
+            --dark-bg: #1a1a1a;
+            --secondary-bg: #2a2a2a;
+            --text-color: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --border-color: #444;
+            --header-height: 81px;
+            --nav-speed: 250ms; /* 新增：定义动画速度 */
         }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -22,6 +28,11 @@
             padding: 0;
             background-color: var(--dark-bg);
             color: var(--text-color);
+        }
+        
+        /* 改进：当移动菜单打开时，禁止body滚动 */
+        .noscroll {
+            overflow: hidden;
         }
 
         .container {
@@ -36,6 +47,8 @@
             padding: 60px 0;
             border-bottom: 1px solid var(--border-color);
         }
+        
+        section[id] { scroll-margin-top: var(--header-height); }
 
         .section-title {
             text-align: center;
@@ -50,16 +63,17 @@
             text-decoration: none;
             transition: color 0.3s ease;
         }
-
-        a:hover {
-            color: #fff;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-        }
+        a:hover { color: #fff; }
         
+        a:focus-visible, .btn:focus-visible {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 3px;
+            border-radius: 3px;
+        }
+
+        img { max-width: 100%; height: auto; display: block; }
+        .bg-alt { background-color: var(--secondary-bg); }
+
         /* --- 头部与导航 --- */
         header {
             background: rgba(26, 26, 26, 0.8);
@@ -71,147 +85,142 @@
             z-index: 1000;
         }
 
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .header-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        .logo-area .logo { height: 50px; }
+        .logo-area .wordmark { height: 35px; filter: invert(1); }
+
+        /* 桌面导航 */
+        .main-nav ul { padding: 0; margin: 0; list-style: none; display: flex; }
+        .main-nav li { padding: 0 15px; }
+        .main-nav a { color: var(--text-color); text-transform: uppercase; font-weight: bold; font-size: 14px; }
+        
+        /* 移动端导航切换按钮 */
+        .nav-toggle {
+            display: none; /* 默认隐藏 */
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1010; /* 确保在菜单之上 */
+            position: relative;
+            width: 44px; /* 优化触摸目标大小 */
+            height: 44px;
         }
 
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        .hamburger {
+            display: block;
+            position: relative;
+            width: 24px;
+            height: 2px;
+            background: var(--text-color);
+            transition: transform var(--nav-speed) ease-in-out;
         }
-
-        .logo-area .logo {
-            height: 50px; /* 控制Logo高度 */
+        .hamburger::before,
+        .hamburger::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--text-color);
+            left: 0;
+            transition: transform var(--nav-speed) ease-in-out, top var(--nav-speed) ease-in-out;
         }
+        .hamburger::before { top: -8px; }
+        .hamburger::after { top: 8px; }
 
-        .logo-area .wordmark {
-            height: 35px; /* 控制字标高度 */
-            filter: invert(1); /* SVG反色，以在深色背景上显示 */
+        /* 改进：汉堡包变 "X" 的动画 */
+        .nav-toggle.is-active .hamburger {
+            transform: rotate(45deg);
         }
-
-        header nav ul {
-            padding: 0;
-            margin: 0;
-            list-style: none;
-            display: flex;
+        .nav-toggle.is-active .hamburger::before {
+            top: 0;
+            transform: rotate(90deg);
         }
-
-        header nav li {
-            padding: 0 15px;
-        }
-
-        header nav a {
-            color: var(--text-color);
-            text-transform: uppercase;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        /* --- 英雄/展示区 --- */
-        .hero {
-            text-align: center;
-            padding: 80px 0;
-            background: var(--secondary-bg);
+        .nav-toggle.is-active .hamburger::after {
+            top: 0;
+            transform: rotate(90deg);
         }
         
-        .hero .org-name-zh {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #fff;
-        }
 
-        .hero .org-name-en {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-bottom: 30px;
-            letter-spacing: 1px;
-        }
-        
-        .hero .slogan {
-            font-family: 'Times New Roman', Times, serif;
-            font-style: italic;
-            font-size: 1.5rem;
-            color: var(--primary-color);
-        }
+        /* --- 其他模块样式 (与之前版本相同) --- */
+        .hero { text-align: center; padding: 80px 0; }
+        .hero .org-name-zh { font-size: 3rem; font-weight: bold; margin-bottom: 10px; color: #fff; }
+        .hero .org-name-en { font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 30px; letter-spacing: 1px; }
+        .hero .slogan { font-family: 'Times New Roman', Times, serif; font-style: italic; font-size: 1.5rem; color: var(--primary-color); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .card { background: var(--secondary-bg); padding: 30px; border-radius: 8px; border: 1px solid var(--border-color); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .card h3 { margin-top: 0; font-size: 1.8rem; color: #fff; }
+        .card p { color: var(--text-secondary); }
+        .btn { display: inline-block; background: var(--primary-color); color: #fff; padding: 12px 25px; border-radius: 5px; font-weight: bold; margin-top: 15px; transition: background-color 0.3s ease; }
+        .btn:hover { background: #4a90c2; color: #fff; }
+        #contact .contact-info, #sponsor .sponsor-info { text-align: center; font-size: 1.2rem; }
+        footer { padding: 30px 0; text-align: center; color: var(--text-secondary); font-size: 0.9rem; border-top: 1px solid var(--border-color); }
 
-        /* --- 内容网格布局 --- */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
+        /* --- 响应式媒体查询 (重点优化区域) --- */
+        @media (max-width: 768px) {
+            .section-title { font-size: 2rem; }
+            .hero .org-name-zh { font-size: 2.2rem; }
+            section { padding: 40px 0; }
 
-        .card {
-            background: var(--secondary-bg);
-            padding: 30px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+            /* 改进：移动端导航菜单样式 */
+            .main-nav {
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 70%;
+                max-width: 300px;
+                height: 100vh;
+                padding-top: var(--header-height);
+                background: var(--dark-bg);
+                transform: translateX(100%); /* 默认移出屏幕外 */
+                transition: transform var(--nav-speed) ease-in-out;
+                z-index: 1005;
+            }
+            .main-nav.is-open {
+                transform: translateX(0); /* 激活时移入屏幕 */
+                box-shadow: -10px 0 30px rgba(0,0,0,0.3);
+            }
+            .main-nav ul {
+                flex-direction: column;
+                height: 100%;
+            }
+            .main-nav li {
+                width: 100%;
+                text-align: center;
+            }
+            .main-nav a {
+                display: block;
+                padding: 20px;
+                font-size: 1.2rem;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .main-nav a:hover {
+                background: var(--secondary-bg);
+            }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            .nav-toggle {
+                display: block; /* 在移动端显示汉堡包按钮 */
+            }
         }
-
-        .card h3 {
-            margin-top: 0;
-            font-size: 1.8rem;
-            color: #fff;
-        }
-        
-        .card p {
-            color: var(--text-secondary);
-        }
-
-        /* --- 按钮样式 --- */
-        .btn {
-            display: inline-block;
-            background: var(--primary-color);
-            color: #fff;
-            padding: 12px 25px;
-            border-radius: 5px;
-            font-weight: bold;
-            margin-top: 15px;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn:hover {
-            background: #4a90c2;
-            color: #fff;
-        }
-
-        /* --- 联系与赞助 --- */
-        #contact .contact-info, #sponsor .sponsor-info {
-            text-align: center;
-            font-size: 1.2rem;
-        }
-
-        /* --- 页脚 --- */
-        footer {
-            padding: 30px 0;
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
     </style>
 </head>
 <body>
 
     <header>
         <div class="container header-container">
-            <div class="logo-area">
-                <img src="https://raw.githubusercontent.com/HCAoR/HCAoR.github.io/73f1178343636784b52d6fb59cb0ac07f7c2c026/assets/icon.svg" alt="组织Logo" class="logo">
-                <img src="https://raw.githubusercontent.com/HCAoR/HCAoR.github.io/73f1178343636784b52d6fb59cb0ac07f7c2c026/assets/wordmark.svg" alt="组织字标" class="wordmark">
-            </div>
-            <nav>
+            <a href="#" aria-label="返回主页" class="logo-area">
+                <img src="https://raw.githubusercontent.com/HCAoR/HCAoR.github.io/73f1178343636784b52d6fb59cb0ac07f7c2c026/assets/icon.svg" alt="罗德岛历史与文化办公室 Logo" class="logo">
+                <img src="https://raw.githubusercontent.com/HCAoR/HCAoR.github.io/73f1178343636784b52d6fb59cb0ac07f7c2c026/assets/wordmark.svg" alt="罗德岛历史与文化办公室 字标" class="wordmark">
+            </a>
+            
+            <button class="nav-toggle" aria-label="切换导航菜单" aria-expanded="false">
+                <span class="hamburger"></span>
+            </button>
+            
+            <nav class="main-nav">
                 <ul>
-                    <!--<li><a href="#mission">目标</a></li>-->
                     <li><a href="#projects">旗下企划</a></li>
                     <li><a href="#blog">博客</a></li>
                     <li><a href="#contact">联系方式</a></li>
@@ -221,68 +230,56 @@
         </div>
     </header>
 
-    <section class="hero">
-        <div class="container">
-            <h1 class="org-name-zh">罗德岛历史与文化办公室</h1>
-            <p class="org-name-en">History and Culture Administration of Rhodes Island</p>
-            <p class="slogan">"We record, we preserve, we research, we inherit."</p>
-        </div>
-    </section>
-
-    <!--<section id="mission" class="container">
-        <h2 class="section-title">目标</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>我们的目标</h3>
-                <p>建设内容完整且高质的《明日方舟》剧情向 Wiki</p>
+    <main>
+        <section class="hero bg-alt">
+            <div class="container">
+                <h1 class="org-name-zh">罗德岛历史与文化办公室</h1>
+                <p class="org-name-en">History and Culture Administration of Rhodes Island</p>
+                <p class="slogan">"We record, we preserve, we research, we inherit."</p>
             </div>
-        </div>
-    </section>-->
+        </section>
 
-    <section id="projects" style="background:var(--secondary-bg);">
-        <div class="container">
+        <section id="projects" class="container">
             <h2 class="section-title">旗下企划</h2>
             <div class="grid">
                 <div class="card">
                     <h3>罗德岛历史与文化办公室综合数据库</h3>
                     <p>即 History and Culture Administration of Rhodes Island General Database, HCAoR DB</p>
-                    <p>一个由《明日方舟》爱好者自发建设, 专注于明日方舟及其衍生作品剧情与考据的 Wiki</p>
+                    <p>由《明日方舟》爱好者自发建设, 专注于明日方舟及其衍生作品剧情与考据的 Wiki</p>
                 </div>
             </div>
-        </div>
-    </section>
-    
-    <section id="blog" class="container">
-        <h2 class="section-title">博客</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>test</h3>
-                <p>测试文章<br><small>2025-08-29</small></p>
-                <a href="./blog/test1.html" class="btn">阅读更多</a>
+        </section>
+        
+        <section id="blog" class="bg-alt">
+            <div class="container">
+                <h2 class="section-title">博客</h2>
+                <div class="grid">
+                    <div class="card"><h3>test1</h3><p>这里显示摘要<br><small>2025-08-29</small></p><a href="./blog/test1.html" class="btn">阅读更多</a></div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="contact" style="background:var(--secondary-bg);">
-        <div class="container">
+        <section id="contact" class="container">
             <h2 class="section-title">联系方式</h2>
             <div class="contact-info">
                 <p>我们欢迎您参与综合数据库的建设</p>
                 <p>您若有疑问，我们也欢迎您通过以下方式随时向我们提出</p>
                 <p>QQ群: 1111111111</p>
                 <p><strong>电子邮件:</strong> <a href="mailto:example@example.org">example@example.org</a></p>
-                </div>
-        </div>
-    </section>
+            </div>
+        </section>
 
-    <section id="sponsor" class="container">
-        <h2 class="section-title">赞助</h2>
-        <div class="sponsor-info">
-            <p>您的每一份支持，都是我们继续下去的动力</p>
-            <a href="https://www.patreon.com/U_0000" class="btn">通过 Patreon 赞助</a>
-            <a href="https://www.ko-fi.com/u_0000" class="btn">通过 Ko-fi 赞助</a>
-        </div>
-    </section>
+        <section id="sponsor" class="bg-alt">
+            <div class="container">
+                <h2 class="section-title">赞助</h2>
+                <div class="sponsor-info">
+                    <p>您的每一份支持，都是我们继续下去的动力</p>
+                    <a href="https://www.patreon.com/U_0000" class="btn">通过 Patreon 赞助</a>
+                    <a href="https://www.ko-fi.com/u_0000" class="btn">通过 Ko-fi 赞助</a>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <footer>
         <div class="container">
@@ -291,5 +288,38 @@
         </div>
     </footer>
 
+    <script>
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.main-nav');
+        const navLinks = document.querySelectorAll('.main-nav a');
+        const body = document.body;
+
+        function openMenu() {
+            navToggle.classList.add('is-active');
+            navToggle.setAttribute('aria-expanded', 'true');
+            navMenu.classList.add('is-open');
+            body.classList.add('noscroll');
+        }
+
+        function closeMenu() {
+            navToggle.classList.remove('is-active');
+            navToggle.setAttribute('aria-expanded', 'false');
+            navMenu.classList.remove('is-open');
+            body.classList.remove('noscroll');
+        }
+
+        navToggle.addEventListener('click', () => {
+            if (navMenu.classList.contains('is-open')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        });
+
+        // 点击导航链接后，自动关闭菜单
+        navLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+    </script>
 </body>
 </html>

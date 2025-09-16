@@ -4,134 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>博客列表 - 罗德岛历史与文化办公室</title>
-    <style>
-        /* --- 基础、头部、页脚等样式 (与之前文件相同) --- */
-        :root {
-            --primary-color: #3a7ca5;
-            --dark-bg: #1a1a1a;
-            --secondary-bg: #2a2a2a;
-            --text-color: #e0e0e0;
-            --text-secondary: #a0a0a0;
-            --border-color: #444;
-            --header-height: 81px;
-        }
-        *, *::before, *::after { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.7;
-            margin: 0;
-            padding: 0;
-            background-color: var(--dark-bg);
-            color: var(--text-color);
-        }
-        .container { width: 90%; max-width: 1100px; margin: auto; padding: 20px 0; }
-        a { color: var(--primary-color); text-decoration: none; transition: color 0.3s ease; }
-        a:hover { color: #fff; }
-        a:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 3px; border-radius: 3px; }
-        header { background: rgba(26, 26, 26, 0.8); backdrop-filter: blur(10px); padding: 15px 0; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
-        .header-container { display: flex; justify-content: space-between; align-items: center; }
-        .logo-area { display: flex; align-items: center; gap: 15px; }
-        .logo-area .logo { height: 50px; }
-        .logo-area .wordmark { height: 35px; filter: invert(1); }
-        header nav ul { padding: 0; margin: 0; list-style: none; display: flex; }
-        header nav li { padding: 0 15px; }
-        header nav a { color: var(--text-color); text-transform: uppercase; font-weight: bold; font-size: 14px; }
-        footer { padding: 30px 0; margin-top: 60px; text-align: center; color: var(--text-secondary); font-size: 0.9rem; border-top: 1px solid var(--border-color); }
-        @media (max-width: 768px) { header nav { display: none; } }
-
-        /* --- 博客列表页专属样式 --- */
-        .page-header {
-            text-align: center;
-            padding: 40px 0;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 40px;
-        }
-        .page-header .page-title {
-            font-size: 3rem;
-            color: #fff;
-            margin: 0;
-        }
-
-        .post-list-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .post-item {
-            padding: 30px 0;
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.3s ease;
-        }
-        .post-item:hover {
-            background-color: rgba(255,255,255,0.03);
-        }
-
-        .post-item .post-title {
-            margin: 0 0 10px 0;
-        }
-
-        .post-item .post-title a {
-            font-size: 2rem;
-            color: #fff;
-            text-decoration: none;
-        }
-        .post-item .post-title a:hover {
-            color: var(--primary-color);
-        }
-
-        .post-item .post-meta {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-        }
-
-        .post-item .post-excerpt {
-            color: var(--text-color);
-            line-height: 1.8;
-        }
-        
-        .post-item .read-more {
-            display: inline-block;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-        .post-item .read-more:hover {
-            text-decoration: underline;
-        }
-
-        /* 分页样式 */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 60px;
-            gap: 10px;
-        }
-        .pagination a, .pagination span {
-            color: var(--text-color);
-            padding: 10px 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background-color 0.3s, border-color 0.3s;
-        }
-        .pagination a:hover {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            color: #fff;
-        }
-        .pagination .current {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            color: #fff;
-        }
-        .pagination .disabled {
-            color: var(--text-secondary);
-            border-color: #333;
-            pointer-events: none;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
@@ -141,10 +14,10 @@
                 <img src="https://raw.githubusercontent.com/HCAoR/HCAoR.github.io/73f1178343636784b52d6fb59cb0ac07f7c2c026/assets/icon.svg" alt="组织Logo" class="logo">
                 <img src="https://raw.githubusercontent.com/HCAoR/HCAoR.github.io/73f1178343636784b52d6fb59cb0ac07f7c2c026/assets/wordmark.svg" alt="组织字标" class="wordmark">
             </a>
-            <nav>
+            <nav class="main-nav">
                 <ul>
                     <li><a href="../index.html#projects">旗下企划</a></li>
-                    <li><a href="../blog.html">博客</a></li>
+                    <li><a href="../index.html#blog">博客</a></li>
                     <li><a href="../index.html#contact">联系方式</a></li>
                     <li><a href="../index.html#sponsor">赞助</a></li>
                 </ul>
@@ -192,7 +65,7 @@
                     <img src="https://assets.hcaor.org/cc-by-sa.svg" alt="CC BY-SA 4.0 许可证" width="88" height="31" style="filter: invert(1);">
                 </a>
                 <a href="https://github.com/HCAoR" aria-lable="访问 GitHub 主页">
-                    <img src="https://assets.hcaor.org/github-mark-white.svg" alt="访问 GitHub 主页" height="25">
+                    <img src="https://assets.hcaor.org/github-mark-white.svg" alt="访问 GitHub 主页" width="25">
                 </a>
             </div>
             </div>

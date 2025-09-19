@@ -9,6 +9,9 @@
 # property and/or other materials, please contact this
 # site’s operator directly.
 
+User-agent: Googlebot
+Allow: /ads.txt
+
 # BEGIN Cloudflare Managed content
 
 User-agent: Amazonbot

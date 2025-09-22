@@ -398,3 +398,14 @@ footer { padding: 30px 0; text-align: center; color: var(--text-secondary); font
         display: none;
     }
 }
+
+@font-face {
+    font-family: 'DIN Mittelschrift Std';
+    src: url('https://assets.hcaor.org/fonts/DINMittelschriftStd.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.din-font {
+    font-family: 'DIN Mittelschrift Std', sans-serif; /* Fallback to a generic sans-serif font */
+}

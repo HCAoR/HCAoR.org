@@ -84,10 +84,7 @@
                         GitHub:
                     </strong> <a href="https://github.com/HCAoR">HCAoR</a>
                 </p>
-                <p><strong style="display: inline-flex; align-items: center; gap: 6px;">
-                        <img src="./assets/icon_mail.svg" alt="Mail" style="filter: invert(1);height: 1em;">
-                        电子邮件:
-                    </strong> <a href="mailto:staff@hcaor.org">staff@hcaor.org</a></p>
+                <p><strong>✉电子邮件:</strong> <a href="mailto:staff@hcaor.org">staff@hcaor.org</a></p>
             </div>
         </section>
 
@@ -110,7 +107,7 @@
             
             <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 20px;">
                 <a href="#" aria-label="返回主页">
-                    <img src="./assets/wiki-logo-v1.svg" alt="History and Culture Administration of Rhodes Island" width="88" height="31" style="filter: invert(1);">
+                    <img src="https://assets.hcaor.org/logo-v1.svg" alt="History and Culture Administration of Rhodes Island" width="88" height="31" style="filter: invert(1);">
                 </a>
                 <a href="https://creativecommons.org/licenses/by-sa/4.0/" aria-label="Creative Commons BY-SA 4.0 License">
                     <img src="https://assets.hcaor.org/cc-by-sa.svg" alt="CC BY-SA 4.0 许可证" width="88" height="31" style="filter: invert(1);">
@@ -131,11 +128,19 @@
         const navLinks = document.querySelectorAll('.main-nav a');
         const body = document.body;
 
+        // 页面加载时确保菜单关闭
+        document.addEventListener('DOMContentLoaded', function() {
+            closeMenu();
+        });
+
         function openMenu() {
             navToggle.classList.add('is-active');
             navToggle.setAttribute('aria-expanded', 'true');
             navMenu.classList.add('is-open');
             body.classList.add('noscroll');
+            
+            // 防止页面滚动时意外显示菜单
+            document.documentElement.style.overflowX = 'hidden';
         }
 
         function closeMenu() {
@@ -143,9 +148,13 @@
             navToggle.setAttribute('aria-expanded', 'false');
             navMenu.classList.remove('is-open');
             body.classList.remove('noscroll');
+            
+            // 恢复页面滚动
+            document.documentElement.style.overflowX = '';
         }
 
-        navToggle.addEventListener('click', () => {
+        navToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); // 防止事件冒泡
             if (navMenu.classList.contains('is-open')) {
                 closeMenu();
             } else {
@@ -157,6 +166,23 @@
         navLinks.forEach(link => {
             link.addEventListener('click', closeMenu);
         });
+
+        // 点击页面其他区域也关闭菜单
+        document.addEventListener('click', function(event) {
+            const isClickInsideNav = navMenu.contains(event.target);
+            const isClickOnToggle = navToggle.contains(event.target);
+            
+            if (!isClickInsideNav && !isClickOnToggle && navMenu.classList.contains('is-open')) {
+                closeMenu();
+            }
+        });
+
+        // 防止触摸事件穿透到菜单后面的内容
+        navMenu.addEventListener('touchmove', function(e) {
+            if (navMenu.classList.contains('is-open')) {
+                e.preventDefault();
+            }
+        }, { passive: false });
 
         // --- 返回顶部按钮逻辑 ---
         const backToTopButton = document.querySelector('.back-to-top');
